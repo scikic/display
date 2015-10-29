@@ -96,6 +96,20 @@ svg.append("defs").selectAll("marker")
   .append("path")
     .attr("d", "M0,-5L10,0L0,5");
 
+var probs = [];
+
+refreshgraph = function(graphname,ps) {
+  var bargraph = svg.append("g")
+  .selectAll("rect")
+    .data(ps)
+  .enter().append("rect")
+    .attr("x", function(d,i) { return i*25; })
+    .attr("y", 20)
+    .attr("width",20)
+    .attr("height",function() {return Math.random()*100;})
+    .attr("fill",'red');
+}
+
 var path = svg.append("g").selectAll("path")
     .data(force.links())
   .enter().append("path")
@@ -122,6 +136,8 @@ function fill_circle_normal(d)
 }
 function set_highlight(d)
 {
+    probs.push(Math.random()*100);
+    refreshgraph('bars1',probs);
     highlight_node = d;
     circle.style("fill", function(e) {
         if (highlight_node==e) {            
